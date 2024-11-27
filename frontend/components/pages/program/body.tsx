@@ -8,11 +8,11 @@ const ProgramBody = () => {
     <div className="px-5 md:px-0">
       <div className="flex items-center justify-center flex-col ">
         <h1 className="font-kaushanScript text-primaryColor text-3xl mt-10 mb-5 -rotate-3">
-          Our Program
+          Our Production Process
         </h1>
         <h2 className="uppercase font-redHat text-5xl text-center">
-          <span className="font-outline-2">Build your</span>{" "}
-          <span className="text-white font-bold">ideal body</span>
+          <span className="font-outline-2">Get an inner</span>{" "}
+          <span className="text-white font-bold">insight</span>
         </h2>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-x-10 mt-28 mb-32 gap-y-8">

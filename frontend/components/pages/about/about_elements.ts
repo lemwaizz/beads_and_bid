@@ -4,21 +4,21 @@ import cardioIcon from "@/assets/icons/cardioicon.jpg";
 
 export const aboutElements = [
   {
-    title: "Privacy",
+    title: "Empowering Communities",
     description:
-      "We never share your personal information with any other companies, so you can be confident that your privacy will be protected when you shop with Home Fitness Code.",
+      "Our mission goes beyond creating beautiful beads. By sourcing materials locally and collaborating with artisans, we provide sustainable livelihoods for families along the Kenyan coast. Each purchase helps support education, healthcare, and community development projects.",
     image: dumbellIcon,
   },
   {
-    title: "Security",
+    title: "Sustainability at Heart",
     description:
-      "Enjoy the feeling of security while shopping! Home Fitness Code is protected by SSL encryption technology to keep your personal information secure.",
+      "We are committed to eco-friendly practices. From responsibly sourcing raw materials to minimizing waste, every step of our process is designed to protect the environment and celebrate the natural beauty of the Kenyan coast.",
     image: heartIcon,
   },
   {
-    title: "Best Prices",
+    title: "Handcrafted Excellence",
     description:
-      "Fitness equipment is our specialty. we are trying our best to reduce the manufacturing costs while maintaining the quality, even better to make sure our equipment is affordable for most people and bring more and more people professional workout experience without going to gym.",
+      "Our beads are a fusion of tradition and artistry. Skilled craftsmen use techniques passed down through generations to create unique, high-quality pieces that reflect the vibrant culture and heritage of the region.",
     image: cardioIcon,
   },
 ];

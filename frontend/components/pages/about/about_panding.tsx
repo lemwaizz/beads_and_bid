@@ -18,39 +18,21 @@ const AboutLanding = () => {
       </div>
       <div>
         <p className="font-redHat text-[#b1b7b5] mt-8">
-          The pandemic of COVID-19 led to the temporary closure of health clubs
-          and gyms owing to worldwide lockdown, impacting the demand for workout
-          equipment in 2020. As a result of decreasing demand for fitness
-          centers, the sector faced a temporary slowdown. Several people avoided
-          going to the gyms owing to the virus. On the other hand, this aspect
-          led to a rise in the revenue of fitness equipment companies as the
-          demand for workouts from home soared. For safety reasons, individuals
-          chose to practice indoors with their own fitness equipment. Home
-          fitness companies have entered the fitness industry and are here to
-          stay. The market is expected to expand from 2021 to 2027 at a CAGR of
-          7.8%. In order to encourage users to take an active interest in their
-          own health, these interactive platforms use real-time customized
-          health data. Moreover, they also provide a social connection with
-          friends and other platform users, which encourages those who are in
-          need of social motivation and accountability. Importantly, this
-          health-based data may be combined with some advanced wearable
-          technology such as Apple watches and Fitbit for an accurate
-          reading.There is a multitude of firms entering the fitness market
-          which offer various equipment that helps you to carry out your fitness
-          regime from home including cyclists, cross-fit, yoga, and dance
-          courses. The various home-based equipment range from costly stationary
-          cycles and treadmills to cheaper choices like yoga and bodyweight
-          strength training. Let’s dive deep into the industry to see the top
-          fitness companies who are leaving quite an indelible mark in the home
-          fitness market.
+          Welcome to Beads and Bid! We are passionate about crafting exquisite,
+          handcrafted beads while making a positive impact. Our raw materials
+          are sustainably sourced from the scenic Kenyan coast, a region known
+          for its natural beauty and rich cultural heritage. At the heart of our
+          mission is the goal to empower local communities. By working directly
+          with artisans and suppliers, we ensure fair wages, skill development,
+          and opportunities for growth. Every bead tells a story of tradition,
+          creativity, and resilience, blending time-honored techniques with
+          modern designs to create truly unique pieces.
           <br />
           <br />
-          Current market trends led to the spike in demand for at-home fitness
-          equipment and the profits of workout companies. With the emergence of
-          a budding ecosystem that includes customers, service and workout
-          companies, complementary sectors, and government initiatives, the
-          fitness industry in the United States is developing at a fast pace.
-          Let’s have a look at the factors revolutionizing the industry.
+          When you choose Beads and Bid, you&apos;re not just buying
+          beads—you&apos;re supporting a vibrant community, fostering
+          sustainable livelihoods, and preserving the artistry of a region that
+          inspires us every day. Together, we make creativity meaningful.
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-y-10 md:gap-y-0 gap-12 my-28">

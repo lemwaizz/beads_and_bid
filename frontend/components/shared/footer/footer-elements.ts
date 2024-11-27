@@ -2,39 +2,39 @@ import { Facebook, Instagram, Twitter } from "lucide-react";
 
 export const footerElements = [
   {
-    title: "Services",
+    title: "Process",
     contents: [
       {
-        title: "Flex Muscle",
+        title: "Inspiration & Design",
         link: "/flex-muscle",
       },
       {
-        title: "Cardio Excerice",
+        title: "Material Selection",
         link: "/cardio-exercise",
       },
       {
-        title: "Basic Yoga",
+        title: "Crafting & Detailing",
         link: "/basic-yoga",
       },
       {
-        title: "Weight Lifting",
+        title: "Polishing & Quality Check",
         link: "/weight-lifting",
       },
     ],
   },
   {
-    title: "Vile tunakujenga",
+    title: "Community",
     contents: [
       {
-        title: "Master",
+        title: "Email",
         link: "/master",
       },
       {
-        title: "Kiongos",
+        title: "Contact",
         link: "/kiongos",
       },
       {
-        title: "Bazu",
+        title: "Support",
         link: "/bazu",
       },
     ],
@@ -47,7 +47,7 @@ export const footerElements = [
         link: "/about-us",
       },
       {
-        title: "Featured Items",
+        title: "Featured Beads",
         link: "/featured-items",
       },
       {
@@ -61,14 +61,14 @@ export const footerElements = [
 export const footerSocials = [
   {
     icon: Twitter,
-    link: "https://twitter.com/iamkiongo",
+    link: "https://twitter.com/beadsAndBid",
   },
   {
     icon: Instagram,
-    link: "https://instagram.com/iamkiongo",
+    link: "https://instagram.com/beadsAndBid",
   },
   {
     icon: Facebook,
-    link: "https://facebook.com/iamkiongo",
+    link: "https://facebook.com/beadsAndBid",
   },
 ];

@@ -1,7 +1,7 @@
 import React from "react";
 import { footerElements, footerSocials } from "./footer-elements";
 import Image from "next/image";
-import mainIcon from "@/assets/icons/mainicon.jpg";
+import mainIcon from "@/assets/icons/mainicon.png";
 import { Facebook, Instagram, LucideIcon, Twitter } from "lucide-react";
 import Link from "next/link";
 
@@ -12,7 +12,7 @@ const Footer = () => {
         <Link href="/">
           <div className="flex gap-2 items-center font-redHat font-bold">
             <Image src={mainIcon} alt="MainIcon" className="w-7 h-7" />
-            <h1>HOME GYM EQUIPMENT</h1>
+            <h1>BEADS & BID</h1>
           </div>
         </Link>
         <div className="grid grid-cols-1 gap-y-6 md:gap-y-0 md:flex md:gap-16 ">
@@ -28,7 +28,7 @@ const Footer = () => {
       <div className="flex justify-between mb-12 gap-x-2 px-5 md:px-0">
         <div>
           <p className="font-redHat text-secondaryColor text-xs">
-            &#169; Copyright HOME GYM EQUIPMENT 2024. All rights reserved.
+            &#169; Copyright BEADS & BID 2024. All rights reserved.
           </p>
         </div>
         <div className="flex gap-x-3 md:gap-6">
@@ -78,7 +78,7 @@ interface FooterSocialIconProps {
 
 const FooterSocialIcon: React.FC<FooterSocialIconProps> = ({ Icon, link }) => {
   return (
-    <div className="rounded-full w-8 h-8 bg-primaryColor flex items-center justify-center cursor-pointer">
+    <div className="rounded-full w-8 h-8 bg-primaryColor flex items-center justify-center cursor-pointer text-white">
       <Icon className="" size={20} />
     </div>
   );

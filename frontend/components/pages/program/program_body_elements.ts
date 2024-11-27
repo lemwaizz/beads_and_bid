@@ -5,27 +5,23 @@ import dumbellIcon from "@/assets/icons/dumbbellicon.jpg";
 
 export const programBodyElements = [
   {
-    title: "Flex Muscle",
-    description:
-      "Creating tension that's temporarily making the muscle fibers smaller or contracted.",
+    title: "Inspiration & Design",
+    description: "Ideas are sketched, inspired by nature, art, and culture.",
     image: buildIcon,
   },
   {
-    title: "Cardio Excercise",
-    description:
-      "Exercise your heart rate up and keeps it up for a prolonged period of time.",
+    title: "Material Selection",
+    description: "Premium materials are chosen for beauty and durability.",
     image: heartIcon,
   },
   {
-    title: "Basic Yoga",
-    description:
-      "Diaphragmatic! This is the most common breathing technique you'll find in Yoga.",
+    title: "Crafting & Detailing",
+    description: "Artisans shape, color, and detail each bead with precision.",
     image: cardioIcon,
   },
   {
-    title: "Weight Lifting",
-    description:
-      "Attempts a maximum weight single lift of a barbell loaded with weight plates.",
+    title: "Polishing & Quality Check",
+    description: "Beads are polished and inspected for flawless quality.",
     image: dumbellIcon,
   },
 ];

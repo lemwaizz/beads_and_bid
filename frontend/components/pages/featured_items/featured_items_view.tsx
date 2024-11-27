@@ -35,7 +35,7 @@ const FeaturedItemsPage = async () => {
     <div className="flex flex-col px-5 md:px-0">
       <div className="flex justify-center items-center flex-col mb-10">
         <h1 className="font-kaushanScript text-primaryColor text-4xl mt-10 mb-5 -rotate-3">
-          Our Featured Items
+          Our Bead Collection
         </h1>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-x-16 gap-y-14">

@@ -11,7 +11,7 @@ const SponsorsSection = () => {
       <div className="flex items-center justify-center">
         <div className="w-48 h-32">
           <Image
-            src={sponsor1}
+            src={sponsor3}
             alt="sponsor1"
             className="w-full h-full object-cover"
           />
@@ -29,7 +29,7 @@ const SponsorsSection = () => {
       <div className="flex items-center justify-center">
         <div className="w-48 h-32">
           <Image
-            src={sponsor3}
+            src={sponsor1}
             alt="sponsor3"
             className="w-full h-full object-cover"
           />
