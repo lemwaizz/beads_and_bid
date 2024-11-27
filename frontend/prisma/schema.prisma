@@ -72,6 +72,7 @@ enum ProductCategory {
   wearable
   gym
   featured
+  bead
 }
 
 model Product {

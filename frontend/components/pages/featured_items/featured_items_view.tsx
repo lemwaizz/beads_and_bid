@@ -5,7 +5,7 @@ import FeaturedItem from "./featured_item";
 async function getProducts() {
   const products = await prisma.product.findMany({
     where: {
-      category: "featured",
+      category: "bead",
     },
     select: {
       id: true,

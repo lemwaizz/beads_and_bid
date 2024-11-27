@@ -18,11 +18,11 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const registerButtonVariants = cva(
-  "px-3 py-2 group border-2 transition-all duration-200",
+  "px-3 py-2 group border-2 transition-all duration-300",
   {
     variants: {
       scrolledFromTop: {
-        true: "bg-primaryColor text-black border-tertiaryColor",
+        true: "bg-primaryColor text-white border-tertiaryColor",
         false: "bg-white text-black border-white",
       },
     },
@@ -85,7 +85,7 @@ const RegisterButton: React.FC = () => {
         className={registerButtonVariants({ scrolledFromTop: scrolled })}
       >
         <div className="flex gap-3 items-center">
-          <p className="font-redHat font-bold">Register Now</p>
+          <p className="font-redHat font-bold">Login to Shop</p>
           <ArrowRight
             size={18}
             className="group-hover:translate-x-1 hidden md:flex transition-all duration-300"

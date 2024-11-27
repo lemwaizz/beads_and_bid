@@ -9,38 +9,38 @@ import DashboardTrainers from "./trainers/dashboard_trainers";
 const DashboardHome = () => {
   return (
     <div className="w-full flex items-center justify-center">
-      <Tabs defaultValue="home" className="">
+      <Tabs defaultValue="orders" className="">
         <div className="flex items-center justify-center w-full">
           <TabsList className="bg-[#1d2120]">
-            <TabsTrigger value="home" className="text-white">
+            {/* <TabsTrigger value="home" className="text-white">
               Home
-            </TabsTrigger>
-            <TabsTrigger value="account" className="text-white">
+            </TabsTrigger> */}
+            <TabsTrigger value="orders" className="text-white">
               Orders
             </TabsTrigger>
-            <TabsTrigger value="password" className="text-white">
+            {/* <TabsTrigger value="password" className="text-white">
               Subscription
-            </TabsTrigger>
-            <TabsTrigger value="trainers" className="text-white">
+            </TabsTrigger> */}
+            {/* <TabsTrigger value="trainers" className="text-white">
               Trainers
-            </TabsTrigger>
+            </TabsTrigger> */}
             <TabsTrigger value="subs" className="text-white">
               Profile
             </TabsTrigger>
           </TabsList>
         </div>
-        <TabsContent value="home" className="">
+        {/* <TabsContent value="home" className="">
           <DashbooardHome />
-        </TabsContent>
-        <TabsContent value="account" className="">
+        </TabsContent> */}
+        <TabsContent value="orders" className="">
           <DashboardOrders />
         </TabsContent>
-        <TabsContent value="password">
+        {/* <TabsContent value="password">
           <DashboardSubs />
-        </TabsContent>
-        <TabsContent value="trainers">
+        </TabsContent> */}
+        {/* <TabsContent value="trainers">
           <DashboardTrainers />
-        </TabsContent>
+        </TabsContent> */}
         <TabsContent value="subs">
           <DashboardProfileEdit />
         </TabsContent>

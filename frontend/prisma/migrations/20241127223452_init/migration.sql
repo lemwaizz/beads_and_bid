@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "ProductCategory" AS ENUM ('wearable', 'gym', 'featured');
+CREATE TYPE "ProductCategory" AS ENUM ('wearable', 'gym', 'featured', 'bead');
 
 -- CreateEnum
 CREATE TYPE "PaymentType" AS ENUM ('subscriptionPayment', 'productPurchase');

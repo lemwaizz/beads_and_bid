@@ -1,6 +1,10 @@
 import prisma from "../../../prisma/client";
 import axios from "axios";
 import { auth } from "@/auth";
+import nodemailer from "nodemailer";
+import PaymentReceiptMail from "@/app/emails/payment_receipt";
+import { render } from "@react-email/render";
+import { v4 as uuidv4 } from "uuid";
 
 const businessShortCode = process.env.MPESA_BUSINESS_SHORT_CODE;
 const transactionType = process.env.MPESA_TRANSACTION_TYPE;
@@ -11,6 +15,19 @@ const stkPushUrl = process.env.MPESA_STK_PUSH_URL;
 const consumerKey = process.env.MPESA_CONSUMER_KEY;
 const consumerSecret = process.env.MPESA_CONSUMER_SECRET;
 const safaricomAuthCredentialsUrl = process.env.MPESA_AUTH_URL;
+
+function hidePhoneNumber(phoneNumber: string): string {
+  // Extract the first five digits and the last digit of the phone number
+  const prefix: string = phoneNumber.slice(0, 5);
+  const suffix: string = phoneNumber.slice(-1);
+
+  // Replace the middle digits with asterisks (*)
+  const hiddenDigits = "******";
+
+  // Combine the parts to form the hidden phone number
+  const hiddenPhoneNumber = `${prefix}${hiddenDigits}${suffix}`;
+  return hiddenPhoneNumber;
+}
 
 const checkIfAccessTokenExpired = (expiryTime: Date): boolean => {
   if (expiryTime < new Date()) {
@@ -25,6 +42,9 @@ type GeneratePasswordDto = {
   passkey: string;
   timestamp: string;
 };
+
+const NODEMAIL_USER = process.env.NODEMAIL_USER;
+const NODEMAIL_PASS = process.env.NODEMAIL_PASS;
 
 function convertDateToTimestamp(date: Date): string {
   console.log(date);
@@ -71,6 +91,119 @@ const getAccessTokenFromDb = async () => {
   return at[0];
 };
 
+const tempMpesaCallbackHandler = async (
+  callbackId: string,
+  userId: string,
+  amount: number
+) => {
+  const mpesaReceiptNumber = uuidv4();
+  const paymentRequest = await prisma.mpesaPaymentRequest.findFirst({
+    where: {
+      id: callbackId,
+    },
+    select: {
+      amount: true,
+      cartId: true,
+      type: true,
+      subscriptionTierId: true,
+      user: {
+        select: {
+          email: true,
+          id: true,
+        },
+      },
+    },
+  });
+
+  const transporter = nodemailer.createTransport({
+    host: "smtp-mail.outlook.com",
+    service: "Outlook365",
+    port: 587,
+    secure: false,
+    auth: {
+      user: NODEMAIL_USER,
+      pass: NODEMAIL_PASS,
+    },
+    tls: { rejectUnauthorized: false },
+  });
+
+  const order = await prisma.order.create({
+    data: {
+      ref: mpesaReceiptNumber,
+      amount: amount,
+      user: {
+        connect: {
+          id: userId,
+        },
+      },
+      product: {
+        create: (
+          await prisma.cart.findFirst({
+            where: {
+              id: paymentRequest?.cartId!,
+            },
+            select: {
+              products: {
+                select: {
+                  quantity: true,
+                  productId: true,
+                },
+              },
+            },
+          })
+        )?.products,
+      },
+    },
+    select: {
+      id: true,
+      user: {
+        select: {
+          email: true,
+          name: true,
+          phoneNumber: true,
+        },
+      },
+    },
+  });
+
+  //   Empty the cart
+  await prisma.productToCart.deleteMany({
+    where: {
+      cartId: paymentRequest?.cartId!,
+    },
+  });
+
+  const productEmailHtml = render(
+    PaymentReceiptMail({
+      itemPaidFor: "Product",
+      mpesaRef: mpesaReceiptNumber,
+      paymentAmount: amount,
+      phoneNumber: hidePhoneNumber(order.user.phoneNumber!),
+      userName: order.user.name!,
+    })
+  );
+
+  const productMailoptions = {
+    from: NODEMAIL_USER,
+    to: order.user.email!,
+    subject: "Payment Successfull",
+    text: `Hello ${order.user.name}, your payment was successful. Your order ref is ${mpesaReceiptNumber}`,
+    html: productEmailHtml,
+  };
+
+  transporter
+    .sendMail(productMailoptions)
+    .then((info) => {
+      console.log("😂😂Message sent: %s", info.messageId);
+    })
+    .catch((error) => {
+      console.log("Error occurred", error);
+    })
+    .finally(() => {
+      transporter.close();
+    });
+};
+
 const generatePassword = (generatePasswordDto: GeneratePasswordDto): string => {
   console.log(generatePasswordDto);
   return Buffer.from(
@@ -108,6 +241,7 @@ export async function POST(req: Request) {
       email: session.user.email!,
     },
     select: {
+      id: true,
       phoneNumber: true,
       address: true,
       name: true,
@@ -116,6 +250,8 @@ export async function POST(req: Request) {
   });
 
   let payload;
+  let callBackId;
+  let amount;
 
   if (data.paymentType === "productPurchase") {
     // Handle this
@@ -172,6 +308,8 @@ export async function POST(req: Request) {
       AccountReference: "Test",
       TransactionDesc: "Test",
     };
+    callBackId = mpesaPaymentRequest.id;
+    amount = hypotheticalPaymentAmount._sum.quantity ?? 0;
     console.log(mpesaPaymentRequest.id);
   } else if (data.paymentType === "subscriptionPurchase") {
     // Handle
@@ -213,60 +351,65 @@ export async function POST(req: Request) {
       AccountReference: "Test",
       TransactionDesc: "Test",
     };
+    callBackId = mpesaPaymentRequest.id;
+    amount = hypotheticalPaymentAmount ?? 0;
     console.log(mpesaPaymentRequest.id);
   }
 
   let at: string;
   try {
-    console.log("trying to get access token🥷🥷");
-    const accessToken = await getAccessTokenFromDb();
-    if (!accessToken || checkIfAccessTokenExpired(accessToken.expiresAt)) {
-      const authToken = await getAccessToken();
-      await prisma.mpesaAccessToken.create({
-        data: {
-          accessToken: authToken.accessToken,
-          expiresAt: getTokenExpiryTime(authToken.expiresIn),
-        },
-      });
-      console.log("access token🔑🔐🗝️", authToken);
-      at = authToken.accessToken;
-    } else {
-      at = accessToken.accessToken;
-    }
-
-    console.log("sending payment request to mpesa📞📞");
-    console.log(payload);
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    headers.append("Authorization", `Bearer ${at}`);
-
-    const res = await fetch(stkPushUrl!, {
-      method: "POST",
-      headers,
-      body: JSON.stringify(payload),
-    });
-    console.log("📞📞");
-
-    const response = await res.json();
-    console.log("response from mpesa📞📞", response);
-
-    if (response.ResponseCode === "0") {
-      const res = {
-        message: "Payment request sent successfully",
-        data: response as MpesaResponseBody,
-        sent: true,
-      };
-      console.log("Payment request sent successfully🥳🥳🥳");
-      return Response.json(res);
-    } else {
-      const res = {
-        message: "Payment request not sent",
-        data: null,
-        sent: false,
-      };
-      console.log("Payment request not sent.📩📩😟😟😔");
-      return Response.json(res);
-    }
+    // console.log("trying to get access token🥷🥷");
+    // const accessToken = await getAccessTokenFromDb();
+    // if (!accessToken || checkIfAccessTokenExpired(accessToken.expiresAt)) {
+    //   const authToken = await getAccessToken();
+    //   await prisma.mpesaAccessToken.create({
+    //     data: {
+    //       accessToken: authToken.accessToken,
+    //       expiresAt: getTokenExpiryTime(authToken.expiresIn),
+    //     },
+    //   });
+    //   console.log("access token🔑🔐🗝️", authToken);
+    //   at = authToken.accessToken;
+    // } else {
+    //   at = accessToken.accessToken;
+    // }
+    // console.log("sending payment request to mpesa📞📞");
+    // console.log(payload);
+    // let headers = new Headers();
+    // headers.append("Content-Type", "application/json");
+    // headers.append("Authorization", `Bearer ${at}`);
+    // const res = await fetch(stkPushUrl!, {
+    //   method: "POST",
+    //   headers,
+    //   body: JSON.stringify(payload),
+    // });
+    // console.log("📞📞");
+    // const response = await res.json();
+    // console.log("response from mpesa📞📞", response);
+    // if (response.ResponseCode === "0") {
+    //   const res = {
+    //     message: "Payment request sent successfully",
+    //     data: response as MpesaResponseBody,
+    //     sent: true,
+    //   };
+    //   console.log("Payment request sent successfully🥳🥳🥳");
+    //   return Response.json(res);
+    // } else {
+    //   const res = {
+    //     message: "Payment request not sent",
+    //     data: null,
+    //     sent: false,
+    //   };
+    //   console.log("Payment request not sent.📩📩😟😟😔");
+    //   return Response.json(res);
+    // }
+    await tempMpesaCallbackHandler(callBackId!, user!.id, amount!);
+    const res = {
+      message: "Payment request sent successfully",
+      data: "Success",
+      sent: true,
+    };
+    return Response.json(res);
   } catch (error) {
     console.log("Payment request not sent. There is a caught error😟😟😔");
     console.log(error);
