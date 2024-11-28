@@ -2,17 +2,15 @@ version: "3"
 services:
   database_migrator:
     container_name: database-migrator
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/lewynation/beads_and_bid_database_migrator:sha-59b0387
     environment:
-      - DATABASE_URL="postgresql://root:root@pg:5432/home_gym?schema=public"
+      - DATABASE_URL="postgresql://root:root@pg:5432/beads_and_bid?schema=public"
     networks:
-      - gym_network
+      - beads_and_bid
     command: sh
     stdin_open: true
     tty: true
 
 networks:
-  gym_network:
+  beads_and_bid:
     external: true
