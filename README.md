@@ -1,4 +1,5 @@
 # beads_and_bid
+https://corruption-buster.ocluse.com/api/auth/signin
 ## Running project locally
 ### Prerequisites
 - node js installed
