@@ -124,7 +124,12 @@ const CartCHeckOut: React.FC<CartCHeckOutProps> = ({ data: cartItems }) => {
       console.log(data);
       if (data.sent) {
         // Navigate to payment loading page
-        router.push("/payment-confirmation");
+        // router.push("/payment-confirmation");
+        toast({
+          title: "Purchase Initiated",
+          description: "The purchase has been initiated successfully",
+          variant: "default",
+        });
       } else {
         toast({
           title: "Error",
