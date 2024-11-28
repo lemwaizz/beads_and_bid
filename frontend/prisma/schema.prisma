@@ -8,8 +8,8 @@ generator client {
 datasource db {
   provider = "postgresql"
   // url      = env("DATABASE_URL")
-  // url      = "postgresql://root:root@pg:5432/beads_and_bid?schema=public"
-  url      = "postgresql://root:root@localhost:5432/beads_and_bid?schema=public"
+  url      = "postgresql://root:root@postgres:5432/beads_and_bid?schema=public"
+  // url      = "postgresql://root:root@localhost:5432/beads_and_bid?schema=public"
 }
 
 model Account {
